@@ -15,7 +15,6 @@ def load_sprite(sprite_folder_name, number_of_frames):
         frames.append(QPixmap(folder_and_file_name))
 
     return frames
-
 class SpritePreview(QMainWindow):
 
     def __init__(self):
@@ -40,7 +39,12 @@ class SpritePreview(QMainWindow):
         # the other components of the program.
         # Create needed connections between the UI components and slot methods
         # you define in this class.
+        main_layout = QVBoxLayout()
+        self.image = QLabel(self)
+        self.image.setPixmap(self.frames[0])
+        main_layout.addWidget(self.image)
 
+        frame.setLayout(main_layout)
         self.setCentralWidget(frame)
 
 

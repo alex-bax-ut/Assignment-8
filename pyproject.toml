@@ -2,5 +2,5 @@
 name = "Assignment-8"
 version = "0.1.0"
 dependencies = [
-    "PyQt6>=6.0.0",
+    "PyQt6", "math"
 ]
