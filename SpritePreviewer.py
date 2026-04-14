@@ -1,4 +1,5 @@
 # Alexein Baxley
+# Repository Link: https://github.com/alex-bax-ut/Assignment-8
 import math
 
 from PyQt6.QtGui import *
@@ -39,14 +40,35 @@ class SpritePreview(QMainWindow):
         # the other components of the program.
         # Create needed connections between the UI components and slot methods
         # you define in this class.
-        main_layout = QVBoxLayout()
+        main_layout = QHBoxLayout()
         self.image = QLabel(self)
         self.image.setPixmap(self.frames[0])
+        self.currentFrame = 0
+        self.frame_timer = QTimer()
+        self.frame_timer.timeout.connect(self.update)
+        self.frame_timer.start(100)
+
+
+
+        self.slider = QSlider()
+        self.slider.setRange(1, 100)
+        self.slider.setTickInterval(10)
+        self.slider.setTickPosition(QSlider.TickPosition.TicksRight)
+
         main_layout.addWidget(self.image)
+        main_layout.addWidget(self.slider)
 
         frame.setLayout(main_layout)
         self.setCentralWidget(frame)
 
+    #updates sprite
+    def update(self):
+        self.currentFrame += 1
+
+        if self.currentFrame >= self.num_frames:
+            self.currentFrame = 0
+
+        self.image.setPixmap(self.frames[self.currentFrame])
 
     # You will need methods in the class to act as slots to connect to signals
 
