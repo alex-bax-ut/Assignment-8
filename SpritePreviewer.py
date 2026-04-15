@@ -92,6 +92,7 @@ class SpritePreview(QMainWindow):
     #updates fps based on slider value
     def slider_update(self, value):
         self.fps_text.setText(str(value))
+        self.frame_timer.setInterval(1000//value)
 
     #stops animation of sprite
     def stop_frames(self):
@@ -102,7 +103,7 @@ class SpritePreview(QMainWindow):
     def start_frames(self):
         if self.start_button.text() == "START":
             fps_val = self.slider.value()
-            self.frame_timer.start(fps_val)
+            self.frame_timer.start(1000//fps_val)
             self.start_button.setText("STOP")
         else:
             self.stop_frames()
