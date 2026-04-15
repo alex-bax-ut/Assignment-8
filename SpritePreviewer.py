@@ -44,22 +44,37 @@ class SpritePreview(QMainWindow):
         self.image = QLabel(self)
         self.image.setPixmap(self.frames[0])
         self.currentFrame = 0
+
         self.frame_timer = QTimer()
         self.frame_timer.timeout.connect(self.update)
-        self.frame_timer.start(100)
 
-
+        self.start_button = QPushButton("START")
+        self.start_button.clicked.connect(self.start_frames)
 
         self.slider = QSlider()
         self.slider.setRange(1, 100)
         self.slider.setTickInterval(10)
         self.slider.setTickPosition(QSlider.TickPosition.TicksRight)
 
+        self.frame_text = QLabel(self)
+        self.frame_text.setText("Frames per second:")
+        self.fps_text = QLabel(self)
+        self.fps_text.setText("Frames per second")
+        self.fps_text.setText(str(self.slider.value()))
+
+        self.slider.valueChanged.connect(self.slider_update)
+
         main_layout.addWidget(self.image)
         main_layout.addWidget(self.slider)
+        main_layout.addWidget(self.frame_text)
+        main_layout.addWidget(self.fps_text)
+        main_layout.addWidget(self.start_button)
 
         frame.setLayout(main_layout)
         self.setCentralWidget(frame)
+
+
+
 
     #updates sprite
     def update(self):
@@ -70,6 +85,17 @@ class SpritePreview(QMainWindow):
 
         self.image.setPixmap(self.frames[self.currentFrame])
 
+    def slider_update(self, value):
+        self.fps_text.setText(str(value))
+
+    def start_frames(self):
+        if self.start_button.text() == "START":
+            fps_val = self.slider.value()
+            self.frame_timer.start(fps_val)
+            self.start_button.setText("STOP")
+        else:
+            self.frame_timer.stop()
+            self.start_button.setText("START")
     # You will need methods in the class to act as slots to connect to signals
 
 
